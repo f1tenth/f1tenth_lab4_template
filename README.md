@@ -27,7 +27,7 @@ To change the map in the simulation, add the included `.png` and `.yaml` map fil
 
 ### V. Deliverables and Submission
 
-**Deliverable 1**: After you're finished, update the entire skeleton package directory with your `gap_follow` package and directly commit and push to the repo Github classroom created for you. Your commited code should start and run in simulation smoothly. The basic requirement is that your car should be able to navigate entire loops in `levine_blocked` map, and through at least 3 corners of the `levine_obs` map. Make screen casts on both maps.
+**Deliverable 1**: After you're finished, update the entire skeleton package directory with your `gap_follow` package and directly commit and push to the repo Github classroom created for you. Your commited code should start and run in simulation smoothly. The basic requirement is that your car should be able to navigate entire loops in `levine_blocked` map, and through at least 3 corners of the `levine_obs` map. You get 5 bonus points if your implementation is able to complete all 4 corners and keeps lapping through the map. Make screen casts on both maps.
 
 **Deliverable 2**: Take a video of the algorithm running on the real car. Include a link to the video on YouTube in **`SUBMISSION.md`**. You may use any other platform than YouTube as long as it is viewable by the graders. You may use different parameters (i.e a separate launch file) for the on-car deployment. 
 
@@ -37,7 +37,8 @@ To change the map in the simulation, add the included `.png` and `.yaml` map fil
 - Implemented Find-Max Gap: **30** Points
 - Implemented Find best point: **30** Points
 - Levine blocked Simulation Video: **10** Points
-- Levine blocked Simulation Vide: **5** Points
+- Levine obstacles Simulation Video: **5** Points
+- Levine obstacles bonus - all 4 corners: **5** Points
 - Real-car Levine Video: **15** Points
 
 ### VII. Extra Resources
