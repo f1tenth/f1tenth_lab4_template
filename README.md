@@ -29,15 +29,41 @@ Your node must subscribe to `/scan` and publish `AckermannDriveStamped` on `/dri
 
 ### V. Deliverables and Submission
 
-**Deliverable 1**: After you're finished, update the entire skeleton package directory with your `gap_follow` package and directly commit and push to the repo Classroom 50 created for you. Your committed code should start and run in simulation smoothly, this includes building as a package with any dependencies included as part of the ``package.xml``. The basic requirement is that your car should be able to drive three laps in a row of the `levine_blocked` map without touching a wall (the autograder times each lap and the leaderboard keeps your fastest), and through at least 3 corners of the `levine_obs` map. You get 5 bonus points if your implementation is able to complete all 4 corners and keeps lapping through the map. The autograder watches both runs in the simulator, so no screencast is needed for them.
+**This lab is done in teams**, and from here on every lab is. Your team is already formed — you do not create one or invite anyone.
 
-**Deliverable 2**: Take a video of the algorithm running on the real car. Upload it to YouTube (unlisted) or Google Drive — for Drive, set sharing to **"Anyone with the link can view"** or we cannot grade it — and include the link in **`SUBMISSION.md`**. You may use different parameters (i.e a separate launch file) for the on-car deployment.
+First upgrade the CLI:
+
+```bash
+gh extension upgrade gh-student
+gh student --version                # v1.41.0 or newer
+```
+
+Then **every member of the team runs the same command**:
+
+```bash
+gh student accept RoboRacer-Class ese-6150 lab-4-follow-the-gap
+```
+
+Whoever runs it first creates the team's shared repository, `ese-6150-lab-4-follow-the-gap-group-<n>`; everyone else gets `Repository already exists` and the same URL. There are no invites to send — your push access comes from your team. To see who is on your team:
+
+```bash
+gh student team list RoboRacer-Class ese-6150 lab-4-follow-the-gap
+```
+
+If accept tells you your teacher assigns the groups and you are not in one, ask a TA rather than creating anything yourself.
+
+All of you push to that one repository, so **pull before you push**. One submission is the whole team's submission, and every member gets the same grade.
+
+**Deliverable 1**: After you're finished, update the entire skeleton package directory with your `gap_follow` package and directly commit and push to your team's repository. Your committed code should start and run in simulation smoothly, this includes building as a package with any dependencies included as part of the ``package.xml``. The basic requirement is that your car should be able to drive three laps in a row of the `levine_blocked` map without touching a wall (the autograder times each lap and the leaderboard keeps your team's fastest), and through at least 3 corners of the `levine_obs` map. You get 5 bonus points if your implementation is able to complete all 4 corners and keeps lapping through the map. The autograder watches both runs in the simulator, so no screencast is needed for them.
+
+**Deliverable 2**: Take a video of your team's algorithm running on the real car — one video for the team. Upload it to YouTube (unlisted) or Google Drive — for Drive, set sharing to **"Anyone with the link can view"** or we cannot grade it — and include the link in **`SUBMISSION.md`**. You may use different parameters (i.e a separate launch file) for the on-car deployment.
 
 ### Submitting
 
-We'll be using Classroom 50 throughout the semester to manage submissions for lab assignments. You can commit and push your work as often as you need, but a plain push does **not** count as a submission. When you're ready to submit, push a tag named `submission`:
+We'll be using Classroom 50 throughout the semester to manage submissions for lab assignments. You can commit and push your work as often as you need, but a plain push does **not** count as a submission. When your team is ready to submit, any one of you pushes a tag named `submission` — it counts for the whole team, so agree on the commit first:
 
 ```bash
+# Make sure you've pulled before or switch branches
 git push                            # your commits
 git tag submission
 git push origin submission          # this triggers the autograder
@@ -49,7 +75,7 @@ The autograder builds your package, probes your controller with synthetic scans,
 git tag -f submission
 git push --force origin submission
 ```
-The last ``submission`` push before the deadline is counted as your final submission and its grade will be your lab's grade.
+The best scored ``submission`` push is counted as your team's final submission, and its grade is every member's grade for the lab. This means that if you pass the obstacle map slowly but want to get a fast time for `levine_blocked` in the leaderboard (which naturally won't pass the obstacle map), you can and should do so in separate commits.
 
 **The autograder finds your work by name.** Use the names the deliverables specify: package `gap_follow` with an executable it can start with `ros2 run gap_follow <executable>` (the skeleton's `reactive_node`), subscribing `/scan` and publishing `/drive`. Otherwise, the autograder will not be able to grade your work and your submission may get the wrong grade.
 
@@ -58,7 +84,7 @@ The last ``submission`` push before the deadline is counted as your final submis
 - Compilation: **10** Points (autograded)
 - Implemented Find-Max Gap: **30** Points (autograded without the simulator: your node is fed scans of a pillar ahead of the car and of a corridor with the car close to one wall, each situation and its mirror image, and must steer toward the wider gap every time)
 - Implemented Find best point: **30** Points (autograded without the simulator: a dead end with the corridor continuing to one side, mirrored; your node must aim into the exit)
-- Levine blocked Simulation: **10** Points (autograded in simulation: three counter-clockwise laps of `levine_blocked` in a row without touching a wall; a run that ends early earns partial credit for the fraction of the three-lap distance covered; the fastest of the three laps goes to the leaderboard)
+- Levine blocked Simulation: **10** Points (autograded in simulation: three counter-clockwise laps of `levine_blocked` in a row without touching a wall; a run that ends early earns partial credit for the fraction of the three-lap distance covered; the fastest of the three laps goes to the leaderboard, where your team races under its own number)
 - Levine obstacles Simulation: **5** Points (autograded in simulation: `levine_obs` counter-clockwise from the east hallway, through at least 3 corners without touching anything; 1 or 2 corners earn partial credit)
 - Levine obstacles bonus - all 4 corners: **5** Points (autograded in simulation: a full clean lap of `levine_obs`, counter-clockwise from the same start; the lap time goes to the obstacle-course leaderboard)
 - Real-car Levine Video: **15** Points (TA-graded from the link in `SUBMISSION.md`: YouTube unlisted, or Google Drive shared as "Anyone with the link can view")
