@@ -25,7 +25,20 @@ Implement a gap follow algorithm to make the car drive autonomously around the L
 
 Test in the [f1tenth_gym_ros](https://github.com/f1tenth/f1tenth_gym_ros/tree/dev-jazzy) simulator on two of its maps: `levine_blocked`, the empty Levine loop with its doorways sealed, and `levine_obs`, the loop with its corner doorways bricked up and thirteen obstacles added (a slalom of boxes and an ellipse on the south hallway, two triangles and a box on the north hallway) that are relatively hard to navigate through. Pick one with `map_path: 'maps/levine_blocked'` or `map_path: 'maps/levine_obs'` in `config/sim.yaml`. Both come with a centerline, so the simulator counts your laps (`/ego_racecar/lap_count`, and a "completed lap" line in the bridge log). The autograder drives your node on the same two maps: `levine_blocked` counter-clockwise from the simulator's stock start pose (`sx: -12.0, sy: 0.0, stheta: 0.0`), on the south hallway heading east, 12 m before the finish line, so all three laps are flying laps and the lap times it reports are the ones your bridge log prints (`completed lap N, last lap X s`); `levine_obs` counter-clockwise too, from the east hallway just past its south corner (`sx: 9.96, sy: 2.8, stheta: 1.5708` in `config/sim.yaml`), heading north, so the north-hallway obstacles and three corners come first and only a full lap has to thread the south-hallway slalom. Test both directions: an obstacle that is easy from one side can be a trap from the other (the L-shaped wall on the north hallway is a dead-end pocket with the way through above it).
 
-Your node must subscribe to `/scan` and publish `AckermannDriveStamped` on `/drive`, and it must work when started with a plain `ros2 run gap_follow <executable>`: the autograder passes no parameter file, so bake your tuned bubble size, thresholds and speeds into the node's defaults. Tip: a gap is only worth aiming at if the car fits through it; the closest-point bubble alone does not tell you that.
+Your node must subscribe to `/scan` and publish `AckermannDriveStamped` on `/drive`.
+
+**One launch file per map.** The autograder starts your code with the two launch files in `gap_follow/launch/`, and nothing else:
+
+```bash
+ros2 launch gap_follow levine_blocked_launch.py   # the three timed laps
+ros2 launch gap_follow levine_obs_launch.py       # the obstacle course (and the scan checks)
+```
+
+Each one is yours to edit: set `EXECUTABLE` to the node you wrote (`reactive_node.py` for Python, `reactive_node` for C++), give each map its own parameter values (a fast tuning for the empty loop, a careful one for the obstacles: one submission now covers both), and start as many nodes as you like, in either language (a gap finder in Python and a controller in C++, say). Start your own nodes only: the autograder runs the simulator. `CMakeLists.txt` must install the folder, `install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})`; the skeleton does. If your team accepted the lab before the launch files were added, copy the two files from [the template](https://github.com/f1tenth/f1tenth_lab4_template/tree/main/gap_follow/launch) and add that line.
+
+Without launch files the autograder falls back to a plain `ros2 run gap_follow <executable>` with no parameter file, so the tuned values must then be your node's defaults. Line F of your result tells you which way each run was started.
+
+Tip: a gap is only worth aiming at if the car fits through it; the closest-point bubble alone does not tell you that.
 
 ### V. Deliverables and Submission
 
@@ -75,9 +88,9 @@ The autograder builds your package, probes your controller with synthetic scans,
 git tag -f submission
 git push --force origin submission
 ```
-The best scored ``submission`` push is counted as your team's final submission, and its grade is every member's grade for the lab. This means that if you pass the obstacle map slowly but want to get a fast time for `levine_blocked` in the leaderboard (which naturally won't pass the obstacle map), you can and should do so in separate commits.
+The best scored ``submission`` push is counted as your team's final submission, and its grade is every member's grade for the lab. A careful tuning for the obstacle map and a fast one for the `levine_blocked` leaderboard fit in one submission: that is what the two launch files are for.
 
-**The autograder finds your work by name.** Use the names the deliverables specify: package `gap_follow` with an executable it can start with `ros2 run gap_follow <executable>` (the skeleton's `reactive_node`), subscribing `/scan` and publishing `/drive`. Otherwise, the autograder will not be able to grade your work and your submission may get the wrong grade.
+**The autograder finds your work by name.** Use the names the deliverables specify: package `gap_follow`, launch files `levine_blocked_launch.py` and `levine_obs_launch.py` (or, without them, an executable it can start with `ros2 run gap_follow <executable>`, the skeleton's `reactive_node`), subscribing `/scan` and publishing `/drive`. Otherwise, the autograder will not be able to grade your work and your submission may get the wrong grade.
 
 ### VI. Grading Rubric
 
