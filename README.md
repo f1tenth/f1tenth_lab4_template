@@ -92,6 +92,8 @@ The best scored ``submission`` push is counted as your team's final submission, 
 
 **The autograder finds your work by name.** Use the names the deliverables specify: package `gap_follow`, launch files `levine_blocked_launch.py` and `levine_obs_launch.py` (or, without them, an executable it can start with `ros2 run gap_follow <executable>`, the skeleton's `reactive_node`), subscribing `/scan` and publishing `/drive`. Otherwise, the autograder will not be able to grade your work and your submission may get the wrong grade.
 
+**Only the topics the lab needs.** Follow the gap drives on the LiDAR alone: your nodes may read `/scan` and publish on `/drive`, plus topics only your own nodes use (markers, a filtered scan). The autograder watches the ROS graph while your code runs: a node that reads anything else the simulator publishes (the car's odometry, `/tf`, the lap counter) or publishes on a topic the simulator or the autograder listens to (`/initialpose`, which teleports the car, `/ego_racecar/odom`, the lap counter, ...) gets every line that ran your code scored 0.
+
 ### VI. Grading Rubric
 
 - Compilation: **10** Points (autograded)
